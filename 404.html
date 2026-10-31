@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Round2 · Your booking</title>
+<meta name="description" content="Your Round2 booking: private movie and gaming rooms at 20 Haji Lane, Singapore.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Your Round2 booking">
+<meta property="og:site_name" content="Round2">
+<meta name="theme-color" content="#06050a">
+<link rel="icon" href="https://static.wixstatic.com/media/a46627_0c92a12b5ec442aeaaa57c744095d829~mv2.webp">
+<style>
+html, body { margin: 0; height: 100%; background: #06050a; }
+iframe { border: 0; display: block; width: 100%; height: 100vh; height: 100dvh; }
+</style>
+</head>
+<body>
+<script>
+/* book.round2.sg — the branded address for the booking engine's guest pages (repo round2-book, GitHub Pages).
+   book.round2.sg/done?ref=…, /find, /b/<code> show the same page from the Round2 booking engine
+   (Cloudflare Worker round2-book) inside this page, so guests only ever see round2.sg. The engine's pages tell
+   this page when they move (e.g. /find → /done?ref=…) so the address bar, reload and sharing stay right.
+   GitHub Pages serves 404.html (a copy of this file) for every path. Keep index.html and 404.html identical. */
+(function () {
+  var ENGINE = 'https://round2-book.donttelldadyet.workers.dev';
+  var OK = /^\/(done|find|b\/[A-Za-z0-9]{1,20})\/?$/;
+  var path = location.pathname.replace(/\/+$/, '') || '/find';
+  if (!OK.test(path)) path = '/find';
+  var f = document.createElement('iframe');
+  f.title = 'Round2 booking';
+  f.allow = 'clipboard-write';
+  f.src = ENGINE + path + location.search;
+  document.body.appendChild(f);
+  window.addEventListener('message', function (e) {
+    if (e.origin !== ENGINE || !e.data || e.data.r2 !== 'page') return;
+    var p = String(e.data.path || '');
+    if (/^\/(done|find)(\?[A-Za-z0-9=&_-]*)?$/.test(p)) { try { history.replaceState(null, '', p); } catch (x) {} }
+    if (e.data.title) document.title = String(e.data.title).slice(0, 80);
+  });
+}());
+</script>
+</body>
+</html>
