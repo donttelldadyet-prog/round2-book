@@ -33,14 +33,6 @@ iframe { border: 0; display: block; width: 100%; height: 100vh; height: 100dvh; 
   f.src = ENGINE + path + location.search;
   document.body.appendChild(f);
   window.addEventListener('message', function (e) {
-    /* SAVE FOUND (owner, 12 Nov): the booking the guest opened is kept on this phone for the round2.sg homepage – a hidden
-       round2sg-home save.html (the homepage's own address) stores it; nothing leaves the phone */
-    if (e.origin === ENGINE && e.data && e.data.r2 === 'save' && e.data.save) {
-      var sv = e.data.save, G = 'https://donttelldadyet-prog.github.io', fr = document.getElementById('r2save');
-      var send = function () { try { fr.contentWindow.postMessage({ r2: 'save', save: sv }, G); } catch (x) {} };
-      if (!fr) { fr = document.createElement('iframe'); fr.id = 'r2save'; fr.title = ''; fr.setAttribute('aria-hidden', 'true'); fr.style.cssText = 'position:absolute;width:0;height:0;border:0;visibility:hidden'; fr.onload = send; fr.src = G + '/round2sg-home/save.html'; document.body.appendChild(fr); } else send();
-      return;
-    }
     if (e.origin !== ENGINE || !e.data || e.data.r2 !== 'page') return;
     var p = String(e.data.path || '');
     if (/^\/(done|find|receipt|move)(\?[A-Za-z0-9=&_-]*)?$/.test(p)) { try { history.replaceState(null, '', p); } catch (x) {} }
