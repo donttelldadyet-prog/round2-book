@@ -24,7 +24,7 @@ iframe { border: 0; display: block; width: 100%; height: 100vh; height: 100dvh; 
    GitHub Pages serves 404.html (a copy of this file) for every path. Keep index.html and 404.html identical. */
 (function () {
   var ENGINE = 'https://round2-book.donttelldadyet.workers.dev';
-  var OK = /^\/(done|find|receipt|[br]\/[A-Za-z0-9]{1,20})\/?$/;
+  var OK = /^\/(done|find|receipt|move|[br]\/[A-Za-z0-9]{1,20})\/?$/;   /* move = guest rescheduling (12 Nov) */
   var path = location.pathname.replace(/\/+$/, '') || '/find';
   if (!OK.test(path)) path = '/find';
   var f = document.createElement('iframe');
@@ -35,7 +35,7 @@ iframe { border: 0; display: block; width: 100%; height: 100vh; height: 100dvh; 
   window.addEventListener('message', function (e) {
     if (e.origin !== ENGINE || !e.data || e.data.r2 !== 'page') return;
     var p = String(e.data.path || '');
-    if (/^\/(done|find|receipt)(\?[A-Za-z0-9=&_-]*)?$/.test(p)) { try { history.replaceState(null, '', p); } catch (x) {} }
+    if (/^\/(done|find|receipt|move)(\?[A-Za-z0-9=&_-]*)?$/.test(p)) { try { history.replaceState(null, '', p); } catch (x) {} }
     if (e.data.title) document.title = String(e.data.title).slice(0, 80);
   });
 }());
