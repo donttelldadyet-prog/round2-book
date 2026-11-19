@@ -24,7 +24,7 @@ iframe { border: 0; display: block; width: 100%; height: 100vh; height: 100dvh; 
    GitHub Pages serves 404.html (a copy of this file) for every path. Keep index.html and 404.html identical. */
 (function () {
   var ENGINE = 'https://round2-book.donttelldadyet.workers.dev';
-  var OK = /^\/(done|find|receipt|move|[brc]\/[A-Za-z0-9]{1,20})\/?$/;   /* move = guest rescheduling (12 Nov) */
+  var OK = /^\/(done|find|receipt|move|m|[brc]\/[A-Za-z0-9]{1,20})\/?$/;   /* move = guest rescheduling (12 Nov); m = member join / log in (19 Nov) */
   var path = location.pathname.replace(/\/+$/, '') || '/find';
   if (!OK.test(path)) path = '/find';
   var f = document.createElement('iframe');
